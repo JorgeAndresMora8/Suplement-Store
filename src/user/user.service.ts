@@ -10,8 +10,8 @@ export class UserService {
     constructor(@InjectRepository(User) private readonly repo: Repository<User>){}
 
     async findOne(id: any){ 
+        if(!id) return null
         const resp = await this.repo.findOneBy({ id })
-        if(!resp) throw new NotFoundException(`User with id ${id} not found`)
         return resp
     }
 
@@ -38,4 +38,7 @@ export class UserService {
         if(!user) throw new NotFoundException('User not found')
         Object.assign(user, { name, lastname, email, password })
         return await this.repo.save(user)}
+
+
+        
 }
